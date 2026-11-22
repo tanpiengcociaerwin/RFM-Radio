@@ -74,6 +74,10 @@ jobs:
         with:
           packages: platform-tools platforms;android-37.0 build-tools;36.0.0 cmake;3.22.1 ndk;29.0.14033849
 
+      - name: Build debug APK and run unit tests
+        if: steps.release.outputs.tag_name == ''
+        run: bash ./gradlew --no-daemon --stacktrace :app:assembleDebug :app:testDebugUnitTest
+
       - name: Build release APK and run unit tests
         if: steps.release.outputs.tag_name != ''
         env:
